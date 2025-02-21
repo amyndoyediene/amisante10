@@ -5,7 +5,20 @@ class Welcome1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF0000FF), // Bleu vif
+      appBar: AppBar(
+        backgroundColor: Color(0xFF0000FF), // Bleu vif
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black), // Icône retour
+          onPressed: () {
+            Navigator.pop(context); // Retour à la page précédente
+          },
+        ),
+      ),
+
       body: Center(
+        
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -18,7 +31,7 @@ class Welcome1 extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              
+
               // Image
               Image.asset(
                 "assets/logo2.jpeg", // Remplace avec ton image
@@ -47,11 +60,26 @@ class Welcome1 extends StatelessWidget {
                 onPressed: () {
                   // Navigation vers la prochaine page
                   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login1Page()),
-                );
+                    context,
+                    MaterialPageRoute(builder: (context) => Login1Page()),
+                  );
                 },
-                child: Text("Continuer"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors
+                      .black, // Couleur noire // Couleur d'arrière-plan rose foncé
+
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                child: Text(
+                  "Continuer",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
