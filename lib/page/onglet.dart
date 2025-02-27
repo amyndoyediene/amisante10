@@ -1,7 +1,7 @@
-import 'package:amimobile10/page/home.dart';
 import 'package:amimobile10/page/assistance.dart';
+import 'package:amimobile10/page/acceuil.dart';
 import 'package:amimobile10/page/suivisant.dart';
-import 'package:amimobile10/page/urgence.dart';
+//import 'package:amimobile10/page/urgence.dart';
 import 'package:amimobile10/page/sensibilisation.dart';
 import 'package:flutter/material.dart';
 
@@ -24,11 +24,11 @@ class HoPage extends StatefulWidget {
 class _HomePageState extends State<HoPage> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
-    HPage(),
+    acceuilPage(),
     EducationPage(),
     SuiviPage(),
     ConsultationPage(),
-    UrgencePage()
+    //Urgence()
   ];
 
   @override

@@ -11,8 +11,9 @@ class ConsultationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false, // Désactive le bouton retour
-          title: Text("Consultation Médicale")),
+        automaticallyImplyLeading: false, // Désactive le bouton retour
+        title: Text("Consultation Médicale"),
+      ),
       body: ListView.builder(
         itemCount: doctors.length,
         itemBuilder: (context, index) {
@@ -25,10 +26,11 @@ class ConsultationPage extends StatelessWidget {
                 onPressed: () {
                   // Réserver une consultation
                   Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) =>RDVPage
-                ()),
-              );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RDVPage(),
+                    ),
+                  );
                 },
                 child: Text("Prendre RDV"),
               ),
@@ -39,9 +41,9 @@ class ConsultationPage extends StatelessWidget {
     );
   }
 }
-///////////////////////////////////////////////////////////////
-///
 
+///////////////////////////////////////////////////////////////
+/// Page de prise de rendez-vous
 
 class RDVPage extends StatefulWidget {
   @override
@@ -52,13 +54,18 @@ class _RDVPageState extends State<RDVPage> {
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   String? selectedDoctor;
-
   final List<String> doctors = [
     "Dr. Jean Dupont - Généraliste",
     "Dr. Marie Curie - Cardiologue",
     "Dr. Ahmed Diallo - Dentiste",
     "Dr. Lisa Martin - Ophtalmologue"
   ];
+
+  // Contrôleurs pour les champs de saisie
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -89,9 +96,24 @@ class _RDVPageState extends State<RDVPage> {
   }
 
   void _confirmRDV() {
-    if (selectedDate != null && selectedTime != null && selectedDoctor != null) {
+    if (selectedDate != null &&
+        selectedTime != null &&
+        selectedDoctor != null &&
+        nameController.text.isNotEmpty &&
+        surnameController.text.isNotEmpty &&
+        ageController.text.isNotEmpty &&
+        descriptionController.text.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Rendez-vous confirmé avec $selectedDoctor le ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year} à ${selectedTime!.format(context)}")),
+        SnackBar(
+          content: Text(
+            "RDV confirmé avec $selectedDoctor\n"
+            "Nom: ${nameController.text} ${surnameController.text}\n"
+            "Âge: ${ageController.text} ans\n"
+            "Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}\n"
+            "Heure: ${selectedTime!.format(context)}\n"
+            "Motif: ${descriptionController.text}",
+          ),
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -109,59 +131,95 @@ class _RDVPageState extends State<RDVPage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Sélectionner un médecin :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            DropdownButton<String>(
-              value: selectedDoctor,
-              isExpanded: true,
-              hint: Text("Choisissez un médecin"),
-              items: doctors.map((doctor) {
-                return DropdownMenuItem<String>(
-                  value: doctor,
-                  child: Text(doctor),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedDoctor = value;
-                });
-              },
-            ),
-            SizedBox(height: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Informations personnelles", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
 
-            Text("Sélectionner une date :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ElevatedButton(
-              onPressed: () => _selectDate(context),
-              child: Text(selectedDate == null
-                  ? "Choisir une date"
-                  : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}"),
-            ),
-            SizedBox(height: 20),
-
-            Text("Sélectionner une heure :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ElevatedButton(
-              onPressed: () => _selectTime(context),
-              child: Text(selectedTime == null
-                  ? "Choisir une heure"
-                  : selectedTime!.format(context)),
-            ),
-            SizedBox(height: 30),
-
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                ),
-                onPressed: _confirmRDV,
-                child: Text("Confirmer le RDV", style: TextStyle(fontSize: 18)),
+              // Champ Nom
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: "Nom"),
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+
+              // Champ Prénom
+              TextField(
+                controller: surnameController,
+                decoration: InputDecoration(labelText: "Prénom"),
+              ),
+              SizedBox(height: 10),
+
+              // Champ Âge
+              TextField(
+                controller: ageController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: "Âge"),
+              ),
+              SizedBox(height: 20),
+
+              Text("Sélectionner un médecin :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              DropdownButton<String>(
+                value: selectedDoctor,
+                isExpanded: true,
+                hint: Text("Choisissez un médecin"),
+                items: doctors.map((doctor) {
+                  return DropdownMenuItem<String>(
+                    value: doctor,
+                    child: Text(doctor),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedDoctor = value;
+                  });
+                },
+              ),
+              SizedBox(height: 20),
+
+              Text("Sélectionner une date :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ElevatedButton(
+                onPressed: () => _selectDate(context),
+                child: Text(selectedDate == null
+                    ? "Choisir une date"
+                    : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}"),
+              ),
+              SizedBox(height: 20),
+
+              Text("Sélectionner une heure :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ElevatedButton(
+                onPressed: () => _selectTime(context),
+                child: Text(selectedTime == null
+                    ? "Choisir une heure"
+                    : selectedTime!.format(context)),
+              ),
+              SizedBox(height: 20),
+
+              // Champ Description du cas
+              TextField(
+                controller: descriptionController,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  labelText: "Description du cas médical",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 30),
+
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  ),
+                  onPressed: _confirmRDV,
+                  child: Text("Confirmer le RDV", style: TextStyle(fontSize: 18)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
