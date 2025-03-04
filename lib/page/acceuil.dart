@@ -8,66 +8,56 @@ import 'package:url_launcher/url_launcher.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: acceuilPage(),
+    home: AccePage(),
   ));
 }
 
 // 📌 Page d'accueil
-class acceuilPage extends StatelessWidget {
+
+
+class AccePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Santé & Prévention"),
+        title: Text("Santé & Prévention", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         automaticallyImplyLeading: false, // Désactive le bouton retour
-
-        // backgroundColor: Colors.blue
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: GridView.count(
           crossAxisCount: 2, // 2 colonnes
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
           children: [
             _buildFeatureCard(
               context,
-              icon: Icons.health_and_safety,
               title: "Conseils Santé",
               image: "assets/cons.png",
-              color: Colors.blue,
               page: conseilPage(),
             ),
             _buildFeatureCard(
               context,
-              icon: Icons.calendar_today,
               title: "Rappels Médicaux",
               image: "assets/rapel.png",
-              color: Colors.blue,
               page: RappelsMedicauxPage(),
             ),
             _buildFeatureCard(
               context,
-              icon: Icons.warning,
               title: "Urgences",
               image: "assets/urgence.png",
-              color: Colors.blue,
               page: UrgencesPage(),
             ),
             _buildFeatureCard(
               context,
-              icon: Icons.chat,
               title: "Chatbot Médical",
               image: "assets/chat.png",
-              color: Colors.blue,
               page: ChatbotPage(),
             ),
             _buildFeatureCard(
               context,
-              icon: Icons.quiz,
-              title: "Quizz Sante",
+              title: "Quizz Santé",
               image: "assets/quiz.png",
-              color: Colors.blue,
               page: QuizzSantePage(),
             ),
           ],
@@ -76,29 +66,35 @@ class acceuilPage extends StatelessWidget {
     );
   }
 
-  // Widget pour créer une carte cliquable avec image
+  // Widget pour créer une carte cliquable avec image en grand format
   Widget _buildFeatureCard(BuildContext context,
-      {required IconData icon,
-      required String title,
-      required String image,
-      required Color color,
-      required Widget page}) {
+      {required String title, required String image, required Widget page}) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => page));
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: color.withOpacity(0.1),
         elevation: 4,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(image, height: 60), // Ajout d'image
-            SizedBox(height: 10),
-            Text(title,
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Image.asset(image, fit: BoxFit.cover), // Image plus grande
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: Colors.blue[100], // Fond bleu clair sous le titre
+              child: Text(
+                title,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold)),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
           ],
         ),
       ),

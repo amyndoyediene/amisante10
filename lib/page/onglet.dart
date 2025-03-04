@@ -24,7 +24,7 @@ class HoPage extends StatefulWidget {
 class _HomePageState extends State<HoPage> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
-    acceuilPage(),
+    AccePage(),
     EducationPage(),
     SuiviPage(),
     ConsultationPage(),
@@ -90,10 +90,10 @@ class _HomePageState extends State<HoPage> {
             icon: Icon(Icons.local_hospital),
             label: 'Assistance',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Urgence',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.warning),
+          //   label: 'Urgence',
+          // ),
         ],
       ),
     );

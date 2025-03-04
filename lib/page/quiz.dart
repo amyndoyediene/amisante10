@@ -8,41 +8,55 @@ class QuizzSantePage extends StatefulWidget {
 class _QuizzSantePageState extends State<QuizzSantePage> {
   int _questionIndex = 0;
   int _score = 0;
+  String? _message;
+  Color? _messageColor;
 
   final List<Map<String, Object>> _questions = [
     {
       "question": "Quelle est la tension artérielle normale ?",
       "answers": [
-        {"text": "12/8 cmHg", "score": 1},
-        {"text": "14/10 cmHg", "score": 0},
-        {"text": "16/9 cmHg", "score": 0},
-        {"text": "10/6 cmHg", "score": 0},
+        {"text": "12/8 cmHg", "score": 1, "isCorrect": true},
+        {"text": "14/10 cmHg", "score": 0, "isCorrect": false},
+        {"text": "16/9 cmHg", "score": 0, "isCorrect": false},
+        {"text": "10/6 cmHg", "score": 0, "isCorrect": false},
       ],
     },
     {
       "question": "Quel taux de glycémie est considéré comme normal à jeun ?",
       "answers": [
-        {"text": "0,70 - 1,10 g/L", "score": 1},
-        {"text": "1,20 - 1,50 g/L", "score": 0},
-        {"text": "0,50 - 0,80 g/L", "score": 0},
-        {"text": "1,50 - 2,00 g/L", "score": 0},
+        {"text": "0,70 - 1,10 g/L", "score": 1, "isCorrect": true},
+        {"text": "1,20 - 1,50 g/L", "score": 0, "isCorrect": false},
+        {"text": "0,50 - 0,80 g/L", "score": 0, "isCorrect": false},
+        {"text": "1,50 - 2,00 g/L", "score": 0, "isCorrect": false},
       ],
     },
     {
       "question": "Quelle est la durée minimale d'exercice physique recommandée par jour ?",
       "answers": [
-        {"text": "10 minutes", "score": 0},
-        {"text": "30 minutes", "score": 1},
-        {"text": "1 heure", "score": 0},
-        {"text": "2 heures", "score": 0},
+        {"text": "10 minutes", "score": 0, "isCorrect": false},
+        {"text": "30 minutes", "score": 1, "isCorrect": true},
+        {"text": "1 heure", "score": 0, "isCorrect": false},
+        {"text": "2 heures", "score": 0, "isCorrect": false},
       ],
     },
   ];
 
-  void _answerQuestion(int score) {
+  void _answerQuestion(int score, bool isCorrect) {
     setState(() {
       _score += score;
-      _questionIndex++;
+      _message = isCorrect ? "Bonne réponse ! 🎉" : "Mauvaise réponse ❌";
+      _messageColor = isCorrect ? Colors.green : Colors.red;
+    });
+
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _message = null;
+        if (_questionIndex < _questions.length - 1) {
+          _questionIndex++;
+        } else {
+          _questionIndex++;
+        }
+      });
     });
   }
 
@@ -50,6 +64,7 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
     setState(() {
       _questionIndex = 0;
       _score = 0;
+      _message = null;
     });
   }
 
@@ -69,11 +84,28 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
                   ),
                   SizedBox(height: 20),
                   ...(_questions[_questionIndex]["answers"] as List<Map<String, Object>>).map((answer) {
-                    return ElevatedButton(
-                      onPressed: () => _answerQuestion(answer["score"] as int),
-                      child: Text(answer["text"] as String),
+                    return Column(
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                            textStyle: TextStyle(fontSize: 16),
+                          ),
+                          onPressed: () =>
+                              _answerQuestion(answer["score"] as int, answer["isCorrect"] as bool),
+                          child: Text(answer["text"] as String),
+                        ),
+                        SizedBox(height: 12), // Ajout d'espace entre les boutons
+                      ],
                     );
                   }).toList(),
+                  if (_message != null) ...[
+                    SizedBox(height: 20),
+                    Text(
+                      _message!,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _messageColor),
+                    ),
+                  ],
                 ],
               )
             : Column(
@@ -85,6 +117,10 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      textStyle: TextStyle(fontSize: 18),
+                    ),
                     onPressed: _restartQuiz,
                     child: Text("Recommencer le quiz"),
                   ),
