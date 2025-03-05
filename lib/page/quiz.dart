@@ -14,6 +14,7 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
   final List<Map<String, Object>> _questions = [
     {
       "question": "Quelle est la tension artérielle normale ?",
+       "image": "assets/sport.jpg",
       "answers": [
         {"text": "12/8 cmHg", "score": 1, "isCorrect": true},
         {"text": "14/10 cmHg", "score": 0, "isCorrect": false},
@@ -23,6 +24,7 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
     },
     {
       "question": "Quel taux de glycémie est considéré comme normal à jeun ?",
+       "image": "assets/sport.jpg",
       "answers": [
         {"text": "0,70 - 1,10 g/L", "score": 1, "isCorrect": true},
         {"text": "1,20 - 1,50 g/L", "score": 0, "isCorrect": false},
@@ -32,6 +34,7 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
     },
     {
       "question": "Quelle est la durée minimale d'exercice physique recommandée par jour ?",
+       "image": "assets/sport.jpg",
       "answers": [
         {"text": "10 minutes", "score": 0, "isCorrect": false},
         {"text": "30 minutes", "score": 1, "isCorrect": true},
@@ -82,6 +85,14 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
                     _questions[_questionIndex]["question"] as String,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
+                   SizedBox(height: 20),
+                  Image.asset(
+                    _questions[_questionIndex]["image"] as String, // Image dynamique
+                    height: 150,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+
                   SizedBox(height: 20),
                   ...(_questions[_questionIndex]["answers"] as List<Map<String, Object>>).map((answer) {
                     return Column(
