@@ -14,7 +14,7 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
   final List<Map<String, Object>> _questions = [
     {
       "question": "Quelle est la tension artérielle normale ?",
-       "image": "assets/sport.jpg",
+      "image": "assets/qspo.png",
       "answers": [
         {"text": "12/8 cmHg", "score": 1, "isCorrect": true},
         {"text": "14/10 cmHg", "score": 0, "isCorrect": false},
@@ -24,7 +24,7 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
     },
     {
       "question": "Quel taux de glycémie est considéré comme normal à jeun ?",
-       "image": "assets/sport.jpg",
+      "image": "assets/qgly.png",
       "answers": [
         {"text": "0,70 - 1,10 g/L", "score": 1, "isCorrect": true},
         {"text": "1,20 - 1,50 g/L", "score": 0, "isCorrect": false},
@@ -33,8 +33,9 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
       ],
     },
     {
-      "question": "Quelle est la durée minimale d'exercice physique recommandée par jour ?",
-       "image": "assets/sport.jpg",
+      "question":
+          "Quelle est la durée minimale d'exercice physique recommandée par jour ?",
+      "image": "assets/qten.png",
       "answers": [
         {"text": "10 minutes", "score": 0, "isCorrect": false},
         {"text": "30 minutes", "score": 1, "isCorrect": true},
@@ -85,28 +86,33 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
                     _questions[_questionIndex]["question"] as String,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                   SizedBox(height: 20),
+                  SizedBox(height: 20),
                   Image.asset(
-                    _questions[_questionIndex]["image"] as String, // Image dynamique
+                    _questions[_questionIndex]["image"]
+                        as String, // Image dynamique
                     height: 150,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
-
                   SizedBox(height: 20),
-                  ...(_questions[_questionIndex]["answers"] as List<Map<String, Object>>).map((answer) {
+                  ...(_questions[_questionIndex]["answers"]
+                          as List<Map<String, Object>>)
+                      .map((answer) {
                     return Column(
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
                             textStyle: TextStyle(fontSize: 16),
                           ),
-                          onPressed: () =>
-                              _answerQuestion(answer["score"] as int, answer["isCorrect"] as bool),
+                          onPressed: () => _answerQuestion(
+                              answer["score"] as int,
+                              answer["isCorrect"] as bool),
                           child: Text(answer["text"] as String),
                         ),
-                        SizedBox(height: 12), // Ajout d'espace entre les boutons
+                        SizedBox(
+                            height: 12), // Ajout d'espace entre les boutons
                       ],
                     );
                   }).toList(),
@@ -114,7 +120,10 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
                     SizedBox(height: 20),
                     Text(
                       _message!,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: _messageColor),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: _messageColor),
                     ),
                   ],
                 ],
@@ -129,7 +138,8 @@ class _QuizzSantePageState extends State<QuizzSantePage> {
                   SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                       textStyle: TextStyle(fontSize: 18),
                     ),
                     onPressed: _restartQuiz,

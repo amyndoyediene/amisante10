@@ -55,10 +55,10 @@ class _RDVPageState extends State<RDVPage> {
   TimeOfDay? selectedTime;
   String? selectedDoctor;
   final List<String> doctors = [
-    "Dr. Jean Dupont - Généraliste",
-    "Dr. Marie Curie - Cardiologue",
-    "Dr. Ahmed Diallo - Dentiste",
-    "Dr. Lisa Martin - Ophtalmologue"
+    "Dr. DIENE - Généraliste",
+    "Dr. SAMB - Cardiologue",
+    "Dr. FALL - Dentiste",
+    "Dr. DIENG - Ophtalmologue"
   ];
 
   // Contrôleurs pour les champs de saisie
