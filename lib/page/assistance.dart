@@ -31,7 +31,17 @@ class ConsultationPage extends StatelessWidget {
                       builder: (context) => RDVPage(),
                     ),
                   );
+                  
                 },
+                style: ElevatedButton.styleFrom(
+                backgroundColor: Colors
+                    .blue, // Couleur noire // Couleur d'arrière-plan rose foncé
+
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
                 child: Text("Prendre RDV"),
               ),
             ),

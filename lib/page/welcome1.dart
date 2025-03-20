@@ -66,7 +66,7 @@ class Welcome1 extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors
-                      .black, // Couleur noire // Couleur d'arrière-plan rose foncé
+                      .blue, // Couleur noire // Couleur d'arrière-plan rose foncé
 
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(

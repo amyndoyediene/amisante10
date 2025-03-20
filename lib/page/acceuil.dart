@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -14,13 +15,13 @@ void main() {
 
 // 📌 Page d'accueil
 
-
 class AccePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Santé & Prévention", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: Text("Santé & Prévention",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         automaticallyImplyLeading: false, // Désactive le bouton retour
       ),
       body: Padding(
@@ -82,7 +83,8 @@ class AccePage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(10),
-                child: Image.asset(image, fit: BoxFit.cover), // Image plus grande
+                child:
+                    Image.asset(image, fit: BoxFit.cover), // Image plus grande
               ),
             ),
             Container(
@@ -105,11 +107,11 @@ class AccePage extends StatelessWidget {
 // 🌿 Page Conseils Santé
 class conseilPage extends StatelessWidget {
   final List<String> tips = [
-    "💔 Massage cardiaque : 30 compressions, 2 insufflations",
-    "🩸 Stopper un saignement : Appuyer avec un tissu propre",
-    "🔥 Brûlure : Eau froide 10 minutes, jamais de glace",
-    "⚡ Électrocution : Ne pas toucher, couper le courant",
-    "🧯 Feu : Étouffer les flammes avec une couverture",
+    "💔 Massage cardiaque :  \n30 compressions, 2 insufflations",
+    "🩸 Stopper un saignement :  \nAppuyer avec un tissu propre",
+    "🔥 Brûlure :  \nEau froide 10 minutes, jamais de glace",
+    "⚡ Électrocution :\n Ne pas toucher, couper le courant",
+    "🧯 Feu :\n Étouffer les flammes avec une couverture",
     "Adoptez un mode de vie sain : \n✔️ Mangez équilibré\n✔️ Faites du sport\n✔️ Hydratez-vous\n✔️ Dormez suffisamment",
   ];
 
@@ -150,10 +152,18 @@ class _RappelsMedicauxPageState extends State<RappelsMedicauxPage> {
   DateTime _selectedDay = DateTime.now();
 
   @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting('fr_FR', null);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text("Rappels Médicaux"), backgroundColor: Colors.blue),
+      appBar: AppBar(
+        title: Text("Rappels Médicaux"),
+        backgroundColor: Colors.blue,
+      ),
       body: Column(
         children: [
           TableCalendar(
@@ -161,6 +171,7 @@ class _RappelsMedicauxPageState extends State<RappelsMedicauxPage> {
             firstDay: DateTime(2000),
             lastDay: DateTime(2050),
             calendarFormat: _calendarFormat,
+            locale: 'fr_FR', // Définit la langue du calendrier en français
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
                 _selectedDay = selectedDay;
@@ -170,7 +181,7 @@ class _RappelsMedicauxPageState extends State<RappelsMedicauxPage> {
           Padding(
             padding: EdgeInsets.all(16),
             child: Text(
-              "Rappel pour : ${DateFormat('dd/MM/yyyy').format(_selectedDay)}",
+              "Rappel pour : ${DateFormat.yMMMMd('fr_FR').format(_selectedDay)}",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
@@ -180,6 +191,7 @@ class _RappelsMedicauxPageState extends State<RappelsMedicauxPage> {
   }
 }
 
+
 // 🚨 Page Urgences avec alerte personnalisée
 class UrgencesPage extends StatelessWidget {
   void _showEmergencyAlert(BuildContext context) {
@@ -187,8 +199,8 @@ class UrgencesPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Alerte Urgence 🚨"),
-          content: Text("Voulez-vous appeler les secours ?"),
+          title: Text("Alerte Sapeur Pompier 🚨"),
+          content: Text("Voulez-vous appeler les Sapeurs Pompiers ?"),
           actions: [
             TextButton(
               child: Text("Annuler"),
@@ -231,7 +243,7 @@ class UrgencesPage extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               onPressed: () => _showEmergencyAlert(context),
-              child: Text("🚨 Alerte Urgence"),
+              child: Text("🚨 Alerte Sapeur Pompier"),
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue, padding: EdgeInsets.all(20)),
             ),

@@ -1,7 +1,6 @@
 
 import 'package:amimobile10/page/onglet.dart';
 import 'package:amimobile10/page/welcome.dart';
-
 import 'package:flutter/material.dart';
 
 
@@ -21,9 +20,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => CommencerPage(),
         'acceuil': (context) => HoPage(),
         // '/contactList': (context) => ContactList(),
-        // '/detailContact': (context) => DetailContact(),
-        // '/fileList': (context) => FileList(),
-        // '/imagePage': (context) => ImagePage()
       },
     );
   }

@@ -90,6 +90,15 @@ class _SuiviPageState extends State<SuiviPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _analyserDonnees,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors
+                    .blue, // Couleur noire // Couleur d'arrière-plan rose foncé
+
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               child: Text("Vérifier"),
             ),
             SizedBox(height: 20),

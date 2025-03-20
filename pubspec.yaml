@@ -39,6 +39,8 @@ dependencies:
   intl: ^0.18.0
   table_calendar: ^3.0.9
   http: ^0.13.5  # Pour la connexion à une API réelle plu
+  # flutter_localizations:
+  #   sdk: flutter  # Ajoute ceci pour act
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +84,7 @@ flutter:
      - assets/qspo.png
      - assets/qten.png
      - assets/quiz.png
+     - assets/asante.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
