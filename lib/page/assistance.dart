@@ -5,6 +5,7 @@ class ConsultationPage extends StatelessWidget {
     {"name": "Dr. Diene", "specialty": "Cardiologue"},
     {"name": "Dr. Mbengue", "specialty": "Généraliste"},
     {"name": "Dr. Babou", "specialty": "Diabétologue"},
+    {"name": "Dr. Ngom", "specialty": "Gynecologue"},
   ];
 
   @override
@@ -31,17 +32,16 @@ class ConsultationPage extends StatelessWidget {
                       builder: (context) => RDVPage(),
                     ),
                   );
-                  
                 },
                 style: ElevatedButton.styleFrom(
-                backgroundColor: Colors
-                    .blue, // Couleur noire // Couleur d'arrière-plan rose foncé
+                  backgroundColor: Colors
+                      .blue, // Couleur noire // Couleur d'arrière-plan rose foncé
 
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-              ),
                 child: Text("Prendre RDV"),
               ),
             ),
@@ -75,6 +75,7 @@ class _RDVPageState extends State<RDVPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final TextEditingController telController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
@@ -112,6 +113,7 @@ class _RDVPageState extends State<RDVPage> {
         nameController.text.isNotEmpty &&
         surnameController.text.isNotEmpty &&
         ageController.text.isNotEmpty &&
+        telController.text.isNotEmpty &&
         descriptionController.text.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -119,6 +121,7 @@ class _RDVPageState extends State<RDVPage> {
             "RDV confirmé avec $selectedDoctor\n"
             "Nom: ${nameController.text} ${surnameController.text}\n"
             "Âge: ${ageController.text} ans\n"
+            "tel: ${telController.text}\n"
             "Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}\n"
             "Heure: ${selectedTime!.format(context)}\n"
             "Motif: ${descriptionController.text}",
@@ -136,6 +139,7 @@ class _RDVPageState extends State<RDVPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text("Prendre un Rendez-vous"),
         centerTitle: true,
       ),
@@ -145,7 +149,8 @@ class _RDVPageState extends State<RDVPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Informations personnelles", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Informations personnelles",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
 
               // Champ Nom
               TextField(
@@ -169,7 +174,16 @@ class _RDVPageState extends State<RDVPage> {
               ),
               SizedBox(height: 20),
 
-              Text("Sélectionner un médecin :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              // Champ tel
+              TextField(
+                controller: telController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: "tel"),
+              ),
+              SizedBox(height: 20),
+
+              Text("Sélectionner un médecin :",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               DropdownButton<String>(
                 value: selectedDoctor,
                 isExpanded: true,
@@ -188,7 +202,8 @@ class _RDVPageState extends State<RDVPage> {
               ),
               SizedBox(height: 20),
 
-              Text("Sélectionner une date :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Sélectionner une date :",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ElevatedButton(
                 onPressed: () => _selectDate(context),
                 child: Text(selectedDate == null
@@ -197,7 +212,8 @@ class _RDVPageState extends State<RDVPage> {
               ),
               SizedBox(height: 20),
 
-              Text("Sélectionner une heure :", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Sélectionner une heure :",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ElevatedButton(
                 onPressed: () => _selectTime(context),
                 child: Text(selectedTime == null
@@ -223,7 +239,8 @@ class _RDVPageState extends State<RDVPage> {
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   ),
                   onPressed: _confirmRDV,
-                  child: Text("Confirmer le RDV", style: TextStyle(fontSize: 18)),
+                  child:
+                      Text("Confirmer le RDV", style: TextStyle(fontSize: 18)),
                 ),
               ),
             ],
